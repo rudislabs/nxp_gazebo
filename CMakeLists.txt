@@ -169,12 +169,12 @@ link_libraries(
 set(deps ${${PROJECT_NAME}_EXPORTED_TARGETS} ${CATKIN_EXPORTED_TARGETS})
 message(STATUS "deps: ${deps}")
 
-add_executable(offb_node src/offb_node.cpp)
-add_executable(cloudsnap src/cloudsnap.cpp)
-add_executable(scan_to_cloud src/scan_to_cloud.cpp)
-add_executable(gazebo_pose_relay src/gazebo_pose_relay.cpp)
-add_executable(setpoint_handler src/setpoint.cpp)
-add_executable(mission_control src/mission_manager.cpp)
+#add_executable(offb_node src/offb_node.cpp)
+#add_executable(cloudsnap src/cloudsnap.cpp)
+#add_executable(scan_to_cloud src/scan_to_cloud.cpp)
+#add_executable(gazebo_pose_relay src/gazebo_pose_relay.cpp)
+#add_executable(setpoint_handler src/setpoint.cpp)
+#add_executable(mission_control src/mission_manager.cpp)
 
 # models
 file(GLOB_RECURSE model_scripts
