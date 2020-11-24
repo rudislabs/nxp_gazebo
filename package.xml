@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<package>
+    <name>nxp_gazebo</name>
+    <version>0.0.0</version>
+    <description>The NXP gazebo package</description>
+
+    <license>MIT</license>
+
+    <url type="repository">https://github.com/rudislabs/nxp_gazebo</url>
+
+    <maintainer email="bperseghetti@rudislabs.com">Benjamin Perseghetti</maintainer>
+    <author email="bperseghetti@rudislabs.com">Benjamin Perseghetti</author>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <build_depend>gazebo_ros</build_depend>
+    <run_depend>gazebo_ros</run_depend>
+    <run_depend>gazebo_plugins</run_depend>
+
+    <build_depend>mavros_msgs</build_depend>
+    <build_depend>geometry_msgs</build_depend>
+    <build_depend>gazebo_msgs</build_depend>
+    <build_depend>roscpp</build_depend>
+    <build_depend>message_generation</build_depend>
+    <build_depend>std_msgs</build_depend>
+    <build_depend>octomap_ros</build_depend>
+    <build_depend>pcl_ros</build_depend>
+    <build_depend>tf2_ros</build_depend>
+    <build_depend>tf2_geometry_msgs</build_depend>
+    <build_depend>tf2_eigen</build_depend>
+    <build_depend>tf2</build_depend>
+    <build_depend>tf</build_depend>
+
+    <run_depend>mavros</run_depend>
+    <run_depend>roscpp</run_depend>
+    <run_depend>rqt_bag</run_depend>
+    <run_depend>rviz</run_depend>
+    <run_depend>octomap_ros</run_depend>
+    <run_depend>rospy</run_depend>
+    <run_depend>pcl_ros</run_depend>
+    <run_depend>tf2_ros</run_depend>
+    <run_depend>tf2_eigen</run_depend>
+    <run_depend>tf2</run_depend>
+    <run_depend>tf</run_depend>
+
+
+    <!-- The export tag contains other, unspecified, tags -->
+    <export>
+        <!-- Other tools can request additional information be placed here -->
+        <!-- Other tools can request additional information be placed here -->
+        <gazebo_ros plugin_path="${prefix}/lib" gazebo_media_path="${prefix}"
+                    gazebo_model_path="${prefix}/models"/>
+    </export>
+</package>
