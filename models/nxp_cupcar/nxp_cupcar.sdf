@@ -477,17 +477,18 @@
       <pose>-.15 0 .05 0 0 0</pose>
       <name>gps</name>
     </include>
+    <joint name='gps_joint' type='fixed'>
+      <child>gps::link</child>
+      <parent>nxp_cupcar_frame_link</parent>
+    </joint>
+    
     <include>
       <uri>model://pixy2_cmucam5</uri>
       <pose>-.15 0 .15 0 0 0</pose>
       <name>pixy2_cmucam5</name>
     </include>
-    <joint name='gps_joint' type='fixed'>
-      <child>gps::link</child>
-      <parent>nxp_cupcar_frame_link</parent>
-    </joint>
     <joint name='pixy2_cmucam5_joint' type='fixed'>
-      <child>pixy2_cmucam5::link</child>
+      <child>pixy2_cmucam5::Pixy2CMUcam5_link</child>
       <parent>nxp_cupcar_frame_link</parent>
     </joint>
     <plugin name='barometer_plugin' filename='libgazebo_barometer_plugin.so'>

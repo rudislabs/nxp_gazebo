@@ -12,6 +12,7 @@
         </inertia>
       </inertial>
       <visual name="Pixy2CMUcam5_visual">
+        <pose>0 0 0 0 0 1.57079632679</pose>
         <geometry>
           <mesh>
             <uri>model://pixy2_cmucam5/meshes/Pixy2CMUcam5.obj</uri>
