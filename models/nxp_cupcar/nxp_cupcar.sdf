@@ -14,7 +14,8 @@
           <iyz>0.0</iyz>
           <izz>0.5</izz>
         </inertia>
-      </inertial><visual name='nxp_cupcar_frame_collision_visual'>
+      </inertial>
+      <visual name='nxp_cupcar_frame_collision_visual'>
         <pose>0 0 0 0 0 1.57079632679</pose>
         <geometry>
           <mesh>
@@ -86,7 +87,8 @@
             </ode>
           </contact>
         </surface>
-      </collision><visual name='nxp_cupcar_front_left_wheel_collision_visual'>
+      </collision>
+      <visual name='nxp_cupcar_front_left_wheel_collision_visual'>
         <pose>0 0 0 1.57079632679 0 0</pose>
         <geometry>
           <cylinder>
@@ -151,7 +153,8 @@
             </ode>
           </contact>
         </surface>
-      </collision><visual name='nxp_cupcar_front_right_wheel_collision_visual'>
+      </collision>
+      <visual name='nxp_cupcar_front_right_wheel_collision_visual'>
         <pose>0 0 0 1.57079632679 0 0</pose>
         <geometry>
           <cylinder>
@@ -216,7 +219,8 @@
             </ode>
           </contact>
         </surface>
-      </collision><visual name='nxp_cupcar_rear_left_wheel_collision_visual'>
+      </collision>
+      <visual name='nxp_cupcar_rear_left_wheel_collision_visual'>
         <pose>0 0 0 1.57079632679 0 0</pose>
         <geometry>
           <cylinder>
@@ -281,7 +285,8 @@
             </ode>
           </contact>
         </surface>
-      </collision><visual name='nxp_cupcar_rear_right_wheel_collision_visual'>
+      </collision>
+      <visual name='nxp_cupcar_rear_right_wheel_collision_visual'>
         <pose>0 0 0 1.57079632679 0 0</pose>
         <geometry>
           <cylinder>
@@ -471,6 +476,11 @@
       <uri>model://gps</uri>
       <pose>-.15 0 .05 0 0 0</pose>
       <name>gps</name>
+    </include>
+    <include>
+      <uri>model://pixy2_cmucam5</uri>
+      <pose>-.15 0 .15 0 0 0</pose>
+      <name>pixy2_cmucam5</name>
     </include>
     <joint name='gps_joint' type='fixed'>
       <child>gps::link</child>

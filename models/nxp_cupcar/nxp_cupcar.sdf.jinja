@@ -20,6 +20,7 @@
           <izz>0.5</izz>
         </inertia>
       </inertial>
+
     {%- if low_polycountframe != 1 -%}
       <visual name='{{ model_name }}_frame_carbon_visual'>
         <pose>-0.145 0 .146 1.57079632679 0 1.57079632679</pose>
@@ -90,7 +91,7 @@
           <mesh>
             <uri>model://nxp_cupcar/meshes/CUPCarCollisionBody.stl</uri>
             <scale>1.0 1.0 1.0</scale>
-        </mesh>
+          </mesh>
         </geometry>
       </collision>
     </link>
@@ -141,6 +142,7 @@
           </contact>
         </surface>
       </collision>
+
     {%- if low_polycountwheel == 1 -%}
       <visual name='{{ model_name }}_front_left_wheel_collision_visual'>
         <pose>0 0 0 1.57079632679 0 0</pose>
@@ -224,6 +226,7 @@
           </contact>
         </surface>
       </collision>
+
     {%- if low_polycountwheel == 1 -%}
       <visual name='{{ model_name }}_front_right_wheel_collision_visual'>
         <pose>0 0 0 1.57079632679 0 0</pose>
@@ -307,6 +310,7 @@
           </contact>
         </surface>
       </collision>
+
     {%- if low_polycountwheel == 1 -%}
       <visual name='{{ model_name }}_rear_left_wheel_collision_visual'>
         <pose>0 0 0 1.57079632679 0 0</pose>
@@ -390,6 +394,7 @@
           </contact>
         </surface>
       </collision>
+
     {%- if low_polycountwheel == 1 -%}
       <visual name='{{ model_name }}_rear_right_wheel_collision_visual'>
         <pose>0 0 0 1.57079632679 0 0</pose>
