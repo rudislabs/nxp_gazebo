@@ -15,7 +15,7 @@
         <geometry>
           <mesh>
             <uri>model://pixy2_cmucam5/meshes/Pixy2CMUcam5.obj</uri>
-            <scale>1.0 1.0 1.0</scale>
+            <scale>.001 .001 .001</scale>
           </mesh>
         </geometry>
       </visual>

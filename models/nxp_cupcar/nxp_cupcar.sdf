@@ -486,6 +486,10 @@
       <child>gps::link</child>
       <parent>nxp_cupcar_frame_link</parent>
     </joint>
+    <joint name='pixy2_cmucam5_joint' type='fixed'>
+      <child>pixy2_cmucam5::link</child>
+      <parent>nxp_cupcar_frame_link</parent>
+    </joint>
     <plugin name='barometer_plugin' filename='libgazebo_barometer_plugin.so'>
       <robotNamespace/>
       <pubRate>50</pubRate>
