@@ -210,10 +210,11 @@ add_custom_target(model_generation ALL DEPENDS ${model_files})
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-# install(PROGRAMS
-#   scripts/my_python_script
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+install(PROGRAMS
+        scripts/label_reader.py
+        #scripts/cvr1_gui.py
+        DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+        )
 
 ## Mark executables and/or libraries for installation
 # install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_node

@@ -2,9 +2,15 @@
 <launch>
   <!-- vehicle model and world -->
   <arg name="rover" default="true"/>
+  <arg name="vision" default="true"/>
   <arg name="vehicle" default="nxp_cupcar"/>
   <arg name="est" default="ekf2"/>
-  <arg name="world" default="$(find nxp_gazebo)/worlds/nxp_raceway.world"/>
+  <arg name="vision_debug" default="true"/>
+  <arg name="rwh" default="0.4,0.5"/>
+  <arg name="world" default="nxp_raceway"/>
+  <arg name="pyr_down" default="1"/>
+  <arg name="output" default="log" />
+
   <!-- gazebo configs -->
   <arg name="gui" default="true"/>
   <arg name="debug" default="false"/>
@@ -13,7 +19,7 @@
   <!-- Gazebo sim -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="gui" value="$(arg gui)"/>
-    <arg name="world_name" value="$(arg world)"/>
+    <arg name="world_name" value="$(find nxp_gazebo)/worlds/$(arg world).world"/>
     <arg name="debug" value="$(arg debug)"/>
     <arg name="verbose" value="$(arg verbose)"/>
     <arg name="paused" value="$(arg paused)"/>
@@ -39,5 +45,12 @@
       <arg name="tgt_system" value="1"/>
       <arg name="tgt_component" value="1"/>
     </include>
+    <group if="$(arg vision)">
+      <node name="track_vision" output="$(arg output)" pkg="nxp_gazebo" type="track_vision.py" respawn="true" respawn_delay="5">
+        <param name="~pyr_down" value="$(arg pyr_down)"/>
+        <param name="~rwh" value="$(arg rwh)"/>
+        <param name="~vision_debug" value="$(arg vision_debug)"/>
+      </node>
+    </group>
   </group>
 </launch>

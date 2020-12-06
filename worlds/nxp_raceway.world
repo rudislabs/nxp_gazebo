@@ -3,7 +3,8 @@
 Generated with jinja_world_gen.py
 @author: Benjamin Perseghetti
 @email: bperseghetti@rudislabs.com
---><sdf version="1.5">
+-->
+<sdf version="1.5">
   <world name="nxp">
     <scene>
       <ambient>0.5 0.5 0.5 1</ambient>
@@ -23,12 +24,12 @@ Generated with jinja_world_gen.py
       </attenuation>
       <direction>-0.01 0.01 -1.0</direction>
     </light>
-  <include>
+    <include>
       <uri>model://ground_plane</uri>
     </include>
     <include>
       <uri>model://nxp_raceway</uri>
-      <pose>-0.7 -0.3 -.04 0 0 0</pose>
+      <pose>-4.0 -0.275 -.04 0 0 0</pose>
     </include>
   
     <physics name='default_physics' default='0' type='ode'>

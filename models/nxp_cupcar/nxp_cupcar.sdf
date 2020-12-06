@@ -484,7 +484,7 @@
     
     <include>
       <uri>model://pixy2_cmucam5</uri>
-      <pose>-.15 0 .15 0 .5 0</pose>
+      <pose>-.10 0 .35 0 1.15 0</pose>
       <name>pixy2_cmucam5</name>
     </include>
     <joint name='pixy2_cmucam5_joint' type='fixed'>
