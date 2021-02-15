@@ -60,25 +60,44 @@ class TrackVision(object):
         if self.oldMethod:
             lineCenters = []
             lineRotations = []
-        
+
         for cn in cnt:
             [vx,vy,lx,ly] = cv2.fitLine(cn, cv2.DIST_L2,0,0.01,0.01)
             tX = int((-ly*vx/vy)+lx)
             bX = int(((ih-ly)*vx/vy)+lx)
             lY = 0
             rY = ih
-            if tX < 0:
-                lY = int((-lx*vy/vx)+ly)
+    
+            if (tX < 0) and (bX > iw):
+                lY = int(((-lx)*vy/vx)+ly)
+                rY = int(((iw-lx)*vy/vx)+ly)
                 tX = 0
-            if tX > iw:
-                lY = int((-lx*vy/vx)+ly)
+                bX = iw
+            elif (tX > iw) and (bX < 0):
+                lY = int(((iw-lx)*vy/vx)+ly)
+                rY = int(((-lx)*vy/vx)+ly)
+                tX = iw
+                bX = 0
+            elif (tX < 0) and (bX < iw):
+                lY = int(((-lx)*vy/vx)+ly)
+                rY = ih
                 tX = 0
-            if bX < 0:
-                lY = int(((iw-lx)*vy/vx)+ly)
-                bX = 0
-            if bX > iw:
-                lY = int(((iw-lx)*vy/vx)+ly)
-                bX = 0
+                bX = int(((ih-ly)*vx/vy)+lx)
+            elif (tX > 0) and (bX > iw):
+                lY = 0
+                rY = int(((iw-lx)*vy/vx)+ly)
+                tX = int((-ly*vx/vy)+lx)
+                bX = iw
+            elif (tX > iw) and (bX > 0):
+                lY = ih
+                rY = int(((iw-lx)*vy/vx)+ly)
+                tX = int(((ih-ly)*vx/vy)+lx)
+                bX = iw
+            elif (tX < iw) and (bX < 0):
+                lY = int((-lx*vy/vx)+ly)
+                rY = 0
+                tX = 0
+                bX = int((ly)*(-vx/vy)+lx)
 
             tXSc = int(tX*(72/iw))
             bXSc = int(bX*(72/iw))
