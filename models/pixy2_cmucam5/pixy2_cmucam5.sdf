@@ -29,7 +29,7 @@
           <horizontal_fov>1.5</horizontal_fov>
           <image>
             <width>1296</width>
-            <height>976</height>
+            <height>936</height> <!--should be 976 but need to be 936 for 18x scale-->
             <format>R8G8B8</format>
           </image>
           <clip>
