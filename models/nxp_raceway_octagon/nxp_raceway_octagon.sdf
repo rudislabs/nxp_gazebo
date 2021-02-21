@@ -4,15 +4,16 @@
     <pose>0 0 0 0 0 0</pose>
     <link name='nxp_raceway_octagon_link'>
       <collision name='nxp_raceway_octagon_collision'>
-        <pose>0 0 0 0 0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
             <uri>model://nxp_raceway_octagon/meshes/CourseOctaSwingInside.stl</uri>
           </mesh>
         </geometry>
+        <pose>0 0 0 0 0 0</pose>
       </collision>
       <visual name='nxp_raceway_octagon_inside_visual'>
+        <cast_shadows>0</cast_shadows>
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <mesh>
@@ -28,6 +29,7 @@
         </material>
       </visual>
       <visual name='nxp_raceway_octagon_border_visual'>
+        <cast_shadows>0</cast_shadows>
         <pose>-.02 -.02 0 0 0 0</pose>
         <geometry>
           <mesh>
@@ -43,7 +45,6 @@
         </material>
       </visual>
     </link>
-    <cast_shadows>0</cast_shadows>
     <static>1</static>
   </model>
 </sdf>
