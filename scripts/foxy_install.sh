@@ -62,7 +62,6 @@ sudo apt-get -y install \
 		libgeographic-dev \
 		libopencv-dev \
 		libyaml-cpp-dev \
-		python3-rosdep \
 		python3-colcon-common-extensions\
 		xvfb \
 		autoconf \
@@ -83,8 +82,8 @@ sudo geographiclib-get-geoids egm96-5
 curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
 sudo sh -c 'echo "deb [arch=$(dpkg --print-architecture)] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros2-latest.list'
 sudo apt update
-sudo apt install -y  gnupg2 \
-	lsb-release \
+sudo apt install -y  \
+	python3-rosdep \
 	ros-foxy-ros-base \
 	ros-foxy-desktop \
 	ros-foxy-cv-bridge \
@@ -121,7 +120,7 @@ python3 -m pip install --upgrade pip wheel setuptools
 # Python 3 dependencies installed by pip
 python3 -m pip install argparse argcomplete coverage cerberus empy jinja2 \
 		matplotlib==3.0.* numpy nunavut packaging pkgconfig pyros-genmsg pyulog \
-		pyyaml requests serial six toml psutil pyulog wheel
+		pyyaml requests serial six toml psutil pyulog opencv-python colcon-common-extensions wheel
 
 echo 'source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash' >> ~/.bashrc
 
