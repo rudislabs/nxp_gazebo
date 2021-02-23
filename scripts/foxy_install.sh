@@ -17,8 +17,21 @@ sudo apt install -y  gnupg2 \
 	ros-foxy-launch-testing-ament-cmake \
 	ros-foxy-cv-bridge \
 	ros-foxy-vision-opencv \
+	ros-foxy-gazebo-dev \
+	ros-foxy-gazebo-msgs \
+	ros-foxy-gazebo-msgs-dbgsym \
+	ros-foxy-gazebo-plugins \
+	ros-foxy-gazebo-plugins-dbgsym \
+	ros-foxy-gazebo-ros \
+	ros-foxy-gazebo-ros2-control \
+	ros-foxy-gazebo-ros2-control-dbgsym \
+	ros-foxy-gazebo-ros2-control-demos \
+	ros-foxy-gazebo-ros2-control-demos-dbgsym \
+	ros-foxy-gazebo-ros-dbgsym \
+	ros-foxy-gazebo-ros-pkgs \
 	ros-foxy-vision-msgs \
-	ros-foxy-vision-msgs-dbgsym
+	ros-foxy-vision-msgs-dbgsym \
+	xterm
 
 source /opt/ros/foxy/setup.bash
 sudo apt install -y python3-pip
@@ -127,16 +140,16 @@ wget -q https://downloads.sourceforge.net/project/astyle/astyle/astyle%203.1/ast
 	&& sudo cp bin/astyle /usr/local/bin
 
 # Gradle (Required to build Fast-RTPS-Gen)
-wget -q "https://services.gradle.org/distributions/gradle-6.3-rc-4-bin.zip" -O /tmp/gradle-6.3-rc-4-bin.zip \
-	&& sudo mkdir -p /opt/gradle \
-	&& cd /tmp \
-	&& sudo unzip -d /opt/gradle gradle-6.3-rc-4-bin.zip
+wget -q "https://services.gradle.org/distributions/gradle-6.3-rc-4-bin.zip" -O /tmp/gradle-6.3-rc-4-bin.zip
+sudo mkdir -p /opt/gradle
+cd /tmp
+sudo unzip -d /opt/gradle gradle-6.3-rc-4-bin.zip
 
 export PATH="/opt/gradle/gradle-6.3-rc-4/bin:$PATH"
 
 # Intall foonathan_memory from source as it is required to Fast-RTPS >= 1.9
-git clone https://github.com/eProsima/foonathan_memory_vendor.git /tmp/foonathan_memory \
-	&& cd /tmp/foonathan_memory \
-	&& mkdir build && cd build \
-	&& cmake .. \
-	&& sudo cmake --build . --target install -- -j $(nproc)
+git clone https://github.com/eProsima/foonathan_memory_vendor.git /tmp/foonathan_memory
+cd /tmp/foonathan_memory
+mkdir build && cd build
+cmake ..
+sudo cmake --build . --target install -- -j $(nproc)
