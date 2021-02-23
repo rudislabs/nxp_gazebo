@@ -1,44 +1,5 @@
 
 #Install ROS2 Foxy
-curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
-sudo sh -c 'echo "deb [arch=$(dpkg --print-architecture)] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros2-latest.list'
-sudo apt update
-sudo apt install -y  gnupg2 \
-	lsb-release \
-	ros-foxy-ros-base \
-	ros-foxy-desktop \
-	ros-foxy-cv-bridge \
-	ros-foxy-image-tools \
-	ros-foxy-image-transport \
-	ros-foxy-image-transport-plugins \
-	ros-foxy-image-pipeline \
-	ros-foxy-camera-calibration-parsers \
-	ros-foxy-camera-info-manager \
-	ros-foxy-launch-testing-ament-cmake \
-	ros-foxy-cv-bridge \
-	ros-foxy-vision-opencv \
-	ros-foxy-gazebo-dev \
-	ros-foxy-gazebo-msgs \
-	ros-foxy-gazebo-msgs-dbgsym \
-	ros-foxy-gazebo-plugins \
-	ros-foxy-gazebo-plugins-dbgsym \
-	ros-foxy-gazebo-ros \
-	ros-foxy-gazebo-ros2-control \
-	ros-foxy-gazebo-ros2-control-dbgsym \
-	ros-foxy-gazebo-ros2-control-demos \
-	ros-foxy-gazebo-ros2-control-demos-dbgsym \
-	ros-foxy-gazebo-ros-dbgsym \
-	ros-foxy-gazebo-ros-pkgs \
-	ros-foxy-vision-msgs \
-	ros-foxy-vision-msgs-dbgsym \
-	xterm
-
-source /opt/ros/foxy/setup.bash
-sudo apt install -y python3-pip
-pip3 install -U argcomplete
-sudo apt-get install python3-colcon-common-extensions
-echo 'source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash' >> ~/.bashrc
-
 sudo apt-get -y install \
 		bzip2 \
 		ca-certificates \
@@ -119,7 +80,40 @@ sudo apt-get -y install \
 		uncrustify \
 		vim-common
 sudo geographiclib-get-geoids egm96-5
+curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+sudo sh -c 'echo "deb [arch=$(dpkg --print-architecture)] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros2-latest.list'
+sudo apt update
+sudo apt install -y  gnupg2 \
+	lsb-release \
+	ros-foxy-ros-base \
+	ros-foxy-desktop \
+	ros-foxy-cv-bridge \
+	ros-foxy-image-tools \
+	ros-foxy-image-transport \
+	ros-foxy-image-transport-plugins \
+	ros-foxy-image-pipeline \
+	ros-foxy-camera-calibration-parsers \
+	ros-foxy-camera-info-manager \
+	ros-foxy-launch-testing-ament-cmake \
+	ros-foxy-cv-bridge \
+	ros-foxy-vision-opencv \
+	ros-foxy-gazebo-dev \
+	ros-foxy-gazebo-msgs \
+	ros-foxy-gazebo-msgs-dbgsym \
+	ros-foxy-gazebo-plugins \
+	ros-foxy-gazebo-plugins-dbgsym \
+	ros-foxy-gazebo-ros \
+	ros-foxy-gazebo-ros2-control \
+	ros-foxy-gazebo-ros2-control-dbgsym \
+	ros-foxy-gazebo-ros2-control-demos \
+	ros-foxy-gazebo-ros2-control-demos-dbgsym \
+	ros-foxy-gazebo-ros-dbgsym \
+	ros-foxy-gazebo-ros-pkgs \
+	ros-foxy-vision-msgs \
+	ros-foxy-vision-msgs-dbgsym \
+	xterm
 sudo apt-get -y autoremove
+source /opt/ros/foxy/setup.bash
 
 # Install Python 3 pip build dependencies first.
 python3 -m pip install --upgrade pip wheel setuptools
@@ -128,6 +122,8 @@ python3 -m pip install --upgrade pip wheel setuptools
 python3 -m pip install argparse argcomplete coverage cerberus empy jinja2 \
 		matplotlib==3.0.* numpy nunavut packaging pkgconfig pyros-genmsg pyulog \
 		pyyaml requests serial six toml psutil pyulog wheel
+
+echo 'source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash' >> ~/.bashrc
 
 # manual ccache setup
 sudo ln -s /usr/bin/ccache /usr/lib/ccache/cc \
