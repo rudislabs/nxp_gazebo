@@ -19,7 +19,7 @@ sudo apt-get -y install bzip2 ca-certificates ccache cmake \
 		libxml2-utils mesa-utils protobuf-compiler \
 		x-window-system geographiclib-tools libeigen3-dev \
 		libgeographic-dev libopencv-dev libyaml-cpp-dev \
-		python3-colcon-common-extensionsxvfb \
+		python3-colcon-common-extensions xvfb \
 		autoconf automake bison build-essential \
 		bzip2 file flex genromfs gperf libncurses-dev \
 		libtool pkg-config uncrustify vim-common python3-rosdep \
