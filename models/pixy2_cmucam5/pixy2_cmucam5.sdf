@@ -1,16 +1,20 @@
-<?xml version='1.0' ?><sdf version='1.5'>
+<?xml version='1.0' ?>
+<sdf version='1.5'>
   <model name='pixy2_cmucam5'>
   	<pose>0 0 .05 0 0 0</pose>
     <static>false</static>
     <link name="Pixy2CMUcam5_link">
-      <inertial>
-        <mass>0.05</mass>
+      <!--<inertial>
+        <mass>0.00003</mass>
         <inertia>
-          <ixx>0.000004</ixx>
-          <iyy>0.000004</iyy>
-          <izz>0.000004</izz>
+          <ixx>2.21000000e-11</ixx>
+          <ixy>0.000000</ixy>
+          <iyy>2.21000000e-11</iyy>
+          <ixz>0.000000</ixz>
+          <iyz>0.000000</iyz>
+          <izz>2.21000000e-11</izz>
         </inertia>
-      </inertial>
+      </inertial>-->
       <visual name="Pixy2CMUcam5_visual">
         <pose>0 0 0 1.57079632679 0 1.57079632679</pose>
         <geometry>
