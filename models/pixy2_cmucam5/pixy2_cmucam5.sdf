@@ -38,7 +38,7 @@
           </image>
           <clip>
             <near>0.02</near>
-            <far>10</far>
+            <far>100</far>
           </clip>
           <lens>
             <type>gnomonical</type>
