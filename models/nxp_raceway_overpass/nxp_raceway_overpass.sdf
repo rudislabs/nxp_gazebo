@@ -1,20 +1,20 @@
 <?xml version="1.0" ?>
-<sdf version="1.5">    
-  <model name='nxp_raceway_overpass'>
+<sdf version="1.6">    
+    <model name='nxp_raceway_overpass'>
     <pose>0 0 0 0 0 0</pose>
     <link name='nxp_raceway_overpass_link'>
       <collision name='nxp_raceway_overpass_collision'>
+        <pose>-16.5 -0.275 -.04 0 0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
             <uri>model://nxp_raceway_overpass/meshes/InfiniteOverpassInsideTunnel.stl</uri>
           </mesh>
         </geometry>
-        <pose>0 0 0 0 0 0</pose>
       </collision>
       <visual name='nxp_raceway_overpass_inside_visual'>
         <cast_shadows>0</cast_shadows>
-        <pose>0 0 0 0 0 0</pose>
+        <pose>-16.5 -0.275 -.04 0 0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
@@ -30,7 +30,7 @@
       </visual>
       <visual name='nxp_raceway_overpass_border_visual'>
         <cast_shadows>0</cast_shadows>
-        <pose>0 0 .02 0 0 0</pose>
+        <pose>-16.5 -0.275 -.02 0 0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
