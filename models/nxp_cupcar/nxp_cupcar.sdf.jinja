@@ -4,7 +4,7 @@
 {%- set camera_image = "Pixy2CMUcam5" if camera_image == "NotSet" else camera_image -%}
 {%- set namespace = "" if namespace == "NotSet" else namespace -%}
 {%- set pixy2_cmucam5 = 1 if pixy2_cmucam5 == "NotSet" else pixy2_cmucam5 -%}
-{%- set logo = "1" -%}
+{%- set logo = "0" -%}
 {%- set controller = "PX4" if controller == "NotSet" else controller %}
 <sdf version="{{ sdf_version }}">
   <model name="{{ model_name }}">
@@ -83,25 +83,6 @@
           <script>
             <name>Gazebo/DarkGrey</name>
             <uri>file://media/materials/scripts/gazebo.material</uri>
-          </script>
-        </material>
-      </visual>
-    {%- endif %}
-    {%- if logo == "1" %} 
-      <visual name="logo_nxp_visual">
-        <pose>-.17 0 .032 0 0 0</pose>
-        <cast_shadows>false</cast_shadows>
-        <geometry>
-          <plane>
-            <normal>0 0 1</normal>
-            <size>0.128 0.051</size>
-          </plane>
-        </geometry>
-        <material>
-          <script>
-            <uri>model://nxp_cupcar/materials/scripts</uri>
-            <uri>model://nxp_cupcar/materials/logo</uri>
-            <name>Logo/NXP</name>
           </script>
         </material>
       </visual>
