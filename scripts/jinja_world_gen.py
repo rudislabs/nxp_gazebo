@@ -29,7 +29,9 @@ default_sdf_world_dict = {
     "warehouse": 1.5,
     "typhoon": 1.5,
     "nxp_raceway_overpass": 1.5,
-    "raceway": 1.5
+    "nxp_raceway_octagon": 1.5,
+    "raceway": 1.5,
+    "canvas": 1.5
 }
 
 if __name__ == "__main__":

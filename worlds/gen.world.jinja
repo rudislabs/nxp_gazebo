@@ -112,12 +112,25 @@ Generated with jinja_world_gen.py
       <uri>model://water_level</uri>
     </include>
   {%- endif %}
+  {%- if world_name == 'canvas' %}
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+  {%- endif %}
   {%- if world_name == 'nxp_raceway_overpass' %}
     <include>
       <uri>model://ground_plane</uri>
     </include>
     <include>
       <uri>model://nxp_raceway_overpass</uri>
+    </include>
+  {%- endif %}
+  {%- if world_name == 'nxp_raceway_octagon' %}
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    <include>
+      <uri>model://nxp_raceway_octagon</uri>
     </include>
   {%- endif %}
   {%- if world_name == 'baylands' %}

@@ -1,34 +1,38 @@
 <?xml version="1.0"?>
 {%- set model_name = "nxp_cupcar" if model_name == "NotSet" else model_name -%}
 {%- set sdf_version = "1.5" if sdf_version == "NotSet" else sdf_version -%}
+{%- set hq_frame = 0 if hq_frame == "NotSet" else hq_frame -%}
+{%- set hq_wheel = 0 if hq_wheel == "NotSet" else hq_wheel -%}
 {%- set camera_image = "Pixy2CMUcam5" if camera_image == "NotSet" else camera_image -%}
 {%- set namespace = "" if namespace == "NotSet" else namespace -%}
 {%- set pixy2_cmucam5 = 1 if pixy2_cmucam5 == "NotSet" else pixy2_cmucam5 -%}
+{%- set scale = 1 -%}
+{%- set scale = 1 if scale == "NotSet" else scale -%}
 {%- set controller = "PX4" if controller == "NotSet" else controller %}
 <sdf version="{{ sdf_version }}">
   <model name="{{ model_name }}">
-  	<pose>0 0 .05 0 0 0</pose>
+  	<pose>0 0 {{ 0.05*scale }} 0 0 0</pose>
     <static>false</static>
     <link name="{{ model_name }}_frame_link">
       <inertial>
-        <pose>-0.0865 0 0 0 0 0</pose>
-        <mass>20.0</mass>
+        <pose>{{ -0.0865*scale }} 0 0 0 0 0</pose>
+        <mass>{{ 20*(scale**2) }}</mass>
         <inertia>
-          <ixx>0.12083</ixx>
+          <ixx>{{ 0.1083333*(scale**4) }}</ixx>
           <ixy>0.0</ixy>
-          <iyy>0.03333</iyy>
+          <iyy>{{ 0.03683333333*(scale**4) }}</iyy>
           <ixz>0.0</ixz>
           <iyz>0.0</iyz>
-          <izz>0.12083</izz>
+          <izz>{{ 0.13683333333*(scale**4) }}</izz>
         </inertia>
       </inertial>
-    {%- if hq_frame == "1" %}
+    {%- if hq_frame == 1 %}
       <visual name="{{ model_name }}_frame_carbon_visual">
-        <pose>-0.145 0 .146 1.57079632679 0 1.57079632679</pose>
+        <pose>{{ -0.145*scale }} 0 {{ 0.146*scale }} 1.57079632679 0 1.57079632679</pose>
         <geometry>
           <mesh>
             <uri>model://nxp_cupcar/meshes/CUPCarCarbonFiber.stl</uri>
-            <scale>0.001 0.001 0.001</scale>
+            <scale>{{ 0.001*scale }} {{ 0.001*scale }} {{ 0.001*scale }}</scale>
           </mesh>
         </geometry>
         <material>
@@ -39,11 +43,11 @@
         </material>
       </visual>
       <visual name="{{ model_name }}_frame_metal_visual">
-        <pose>-0.145 0 .146 1.57079632679 0 1.57079632679</pose>
+        <pose>{{ -0.145*scale }} 0 {{ 0.146*scale }} 1.57079632679 0 1.57079632679</pose>
         <geometry>
           <mesh>
             <uri>model://nxp_cupcar/meshes/CUPCarMetalPartsNoSteerNoScrews.stl</uri>
-            <scale>0.001 0.001 0.001</scale>
+            <scale>{{ 0.001*scale }} {{ 0.001*scale }} {{ 0.001*scale }}</scale>
           </mesh>
         </geometry>
         <material>
@@ -54,11 +58,11 @@
         </material>
       </visual>
       <visual name="{{ model_name }}_frame_bumper_servo_visual">
-        <pose>-0.145 0 .146 1.57079632679 0 1.57079632679</pose>
+        <pose>{{ -0.145*scale }} 0 {{ 0.146*scale }} 1.57079632679 0 1.57079632679</pose>
         <geometry>
           <mesh>
             <uri>model://nxp_cupcar/meshes/CUPCarServoBumper.stl</uri>
-            <scale>0.001 0.001 0.001</scale>
+            <scale>{{ 0.001*scale }} {{ 0.001*scale }} {{ 0.001*scale }}</scale>
           </mesh>
         </geometry>
         <material>
@@ -75,7 +79,7 @@
         <geometry>
           <mesh>
             <uri>model://nxp_cupcar/meshes/CUPCarCollisionBody.stl</uri>
-            <scale>1.0 1.0 1.0</scale>
+            <scale>{{ 1.0*scale }} {{ 1.0*scale }} {{ 1.0*scale }}</scale>
           </mesh>
         </geometry>
         <material>
@@ -87,33 +91,33 @@
       </visual>
     {%- endif %}
       <collision name="{{ model_name }}_frame_collision">
-        <pose>-.11 0 .008 0 0 0</pose>
+        <pose>{{ -0.11*scale }} 0 {{ 0.008*scale }} 0 0 0</pose>
         <geometry>
           <box>
-            <size>.3 .05 .047</size>
+            <size>{{ 0.3*scale }} {{ 0.05*scale }} {{ 0.047*scale }}</size>
           </box>
         </geometry>
       </collision>
     </link>
     <link name="{{ model_name }}_front_left_wheel_link">
-      <pose>-.04 0.07 -.0055 0 0 1.57079632679</pose>
+      <pose>{{ -0.04*scale }} {{ 0.07*scale }} {{ -0.0055*scale }} 0 0 1.57079632679</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
-        <mass>1.1</mass>
+        <mass>{{ 1.1*(scale**2) }}</mass>
         <inertia>
-          <ixx>0.058631238</ixx>
+          <ixx>{{ 0.058631238*(scale**4) }}</ixx>
           <ixy>0.0</ixy>
-          <iyy>0.033552910</iyy>
+          <iyy>{{ 0.033552910*(scale**4) }}</iyy>
           <ixz>0.0</ixz>
           <iyz>0.0</iyz>
-          <izz>0.033552910</izz>
+          <izz>{{ 0.033552910*(scale**4) }}</izz>
         </inertia>
       </inertial>
       <collision name="{{ model_name }}_front_left_wheel_collision">
         <pose>0 0 0 0 1.57079632679 0</pose>
         <geometry>
           <sphere>
-            <radius>0.033</radius>
+            <radius>{{ 0.033*scale }}</radius>
           </sphere>
         </geometry>
         <max_contacts>1</max_contacts>
@@ -135,13 +139,13 @@
           </contact>
         </surface>
       </collision>
-    {%- if hq_wheel != "1" %}
+    {%- if hq_wheel != 1 %}
       <visual name="{{ model_name }}_front_left_wheel_collision_visual">
         <pose>0 0 0 0 1.57079632679 0</pose>
         <geometry>
           <cylinder>
-            <radius>0.033</radius>
-            <length>0.024</length>
+            <radius>{{ 0.033*scale }}</radius>
+            <length>{{ 0.024*scale }}</length>
           </cylinder>
         </geometry>
         <material>
@@ -152,9 +156,9 @@
         </material>
       </visual>
     {%- endif %}
-    {%- if hq_wheel == "1" %}
+    {%- if hq_wheel == 1 %}
       <visual name="{{ model_name }}_front_left_wheel_visual">
-        <pose>0 .006 0 0 0 3.141592653589793238</pose>
+        <pose>0 {{ 0.006*scale }} 0 0 0 -1.57079632679</pose>
         <geometry>
           <mesh>
             <uri>model://nxp_cupcar/meshes/LeftWheel.stl</uri>
@@ -172,25 +176,25 @@
       <velocity_decay/>
     </link>
     <link name="{{ model_name }}_front_right_wheel_link">
-      <pose>-.04 -0.07 -.0055 0 0 1.57079632679</pose>
+      <pose>{{ -0.04*scale }} {{ -0.07*scale }} {{ -0.0055*scale }} 0 0 1.57079632679</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
-        <mass>1.1</mass>
+        <mass>{{ 1.1*(scale**2) }}</mass>
         <inertia>
-          <ixx>0.058631238</ixx>
+          <ixx>{{ 0.058631238*(scale**4) }}</ixx>
           <ixy>0.0</ixy>
-          <iyy>0.033552910</iyy>
+          <iyy>{{ 0.033552910*(scale**4) }}</iyy>
           <ixz>0.0</ixz>
           <iyz>0.0</iyz>
-          <izz>0.033552910</izz>
+          <izz>{{ 0.033552910*(scale**4) }}</izz>
         </inertia>
       </inertial>
       <collision name="{{ model_name }}_front_right_wheel_collision">
         <pose>0 0 0 0 1.57079632679 0</pose>
         <geometry>
           <cylinder>
-            <radius>0.033</radius>
-            <length>0.022</length>
+            <radius>{{ 0.033*scale }}</radius>
+            <length>{{ 0.022*scale }}</length>
           </cylinder>
         </geometry>
         <max_contacts>1</max_contacts>
@@ -212,13 +216,13 @@
           </contact>
         </surface>
       </collision>
-    {%- if hq_wheel != "1" %}
+    {%- if hq_wheel != 1 %}
       <visual name="{{ model_name }}_front_right_wheel_collision_visual">
         <pose>0 0 0 0 1.57079632679 0</pose>
         <geometry>
           <cylinder>
-            <radius>0.033</radius>
-            <length>0.024</length>
+            <radius>{{ 0.033*scale }}</radius>
+            <length>{{ 0.024*scale }}</length>
           </cylinder>
         </geometry>
         <material>
@@ -229,9 +233,9 @@
         </material>
       </visual>
     {%- endif %}
-    {%- if hq_wheel == "1" %}
+    {%- if hq_wheel == 1 %}
       <visual name="{{ model_name }}_front_right_wheel_visual">
-        <pose>0 -.006 0 0 0 0</pose>
+        <pose>0 {{ -0.006*scale }} 0 0 0 1.57079632679</pose>
         <geometry>
           <mesh>
             <uri>model://nxp_cupcar/meshes/RightWheel.stl</uri>
@@ -249,25 +253,25 @@
       <velocity_decay/>
     </link>
     <link name="{{ model_name }}_rear_left_wheel_link">
-      <pose>-.213 0.07 -.0055 0 0 1.57079632679</pose>
+      <pose>{{ -0.213*scale }} {{ 0.07*scale }} {{ -0.0055*scale }} 0 0 1.57079632679</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
-        <mass>1.1</mass>
+        <mass>{{ 1.1*(scale**2) }}</mass>
         <inertia>
-          <ixx>0.058631238</ixx>
+          <ixx>{{ 0.058631238*(scale**4) }}</ixx>
           <ixy>0.0</ixy>
-          <iyy>0.033552910</iyy>
+          <iyy>{{ 0.033552910*(scale**4) }}</iyy>
           <ixz>0.0</ixz>
           <iyz>0.0</iyz>
-          <izz>0.033552910</izz>
+          <izz>{{ 0.033552910*(scale**4) }}</izz>
         </inertia>
       </inertial>
       <collision name="{{ model_name }}_rear_left_wheel_collision">
         <pose>0 0 0 0 1.57079632679 0</pose>
         <geometry>
           <cylinder>
-            <radius>0.033</radius>
-            <length>0.022</length>
+            <radius>{{ 0.033*scale }}</radius>
+            <length>{{ 0.022*scale }}</length>
           </cylinder>
         </geometry>
         <max_contacts>1</max_contacts>
@@ -289,13 +293,13 @@
           </contact>
         </surface>
       </collision>
-    {%- if hq_wheel != "1" %}
+    {%- if hq_wheel != 1 %}
       <visual name="{{ model_name }}_rear_left_wheel_collision_visual">
         <pose>0 0 0 0 1.57079632679 0</pose>
         <geometry>
           <cylinder>
-            <radius>0.033</radius>
-            <length>0.024</length>
+            <radius>{{ 0.033*scale }}</radius>
+            <length>{{ 0.024*scale }}</length>
           </cylinder>
         </geometry>
         <material>
@@ -306,9 +310,9 @@
         </material>
       </visual>
     {%- endif %}
-    {%- if hq_wheel == "1" %}
+    {%- if hq_wheel == 1 %}
       <visual name="{{ model_name }}_rear_left_wheel_visual">
-        <pose>0 .006 0 0 0 3.141592653589793238</pose>
+        <pose>0 {{ 0.006*scale }} 0 0 0 -1.57079632679</pose>
         <geometry>
           <mesh>
             <uri>model://nxp_cupcar/meshes/LeftWheel.stl</uri>
@@ -326,24 +330,24 @@
       <velocity_decay/>
     </link>
     <link name="{{ model_name }}_rear_right_wheel_link">
-      <pose>-.213 -0.07 -.0055 0 0 1.57079632679</pose>
+      <pose>{{ -0.213*scale }} {{ -0.07*scale }} {{ -0.0055*scale }} 0 0 1.57079632679</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
-        <mass>1.1</mass>
+        <mass>{{ 1.1*(scale**2) }}</mass>
         <inertia>
-          <ixx>0.058631238</ixx>
+          <ixx>{{ 0.058631238*(scale**4) }}</ixx>
           <ixy>0.0</ixy>
-          <iyy>0.033552910</iyy>
+          <iyy>{{ 0.033552910*(scale**4) }}</iyy>
           <ixz>0.0</ixz>
           <iyz>0.0</iyz>
-          <izz>0.033552910</izz>
+          <izz>{{ 0.033552910*(scale**4) }}</izz>
         </inertia>
       </inertial>
       <collision name="{{ model_name }}_rear_right_wheel_collision">
         <pose>0 0 0 0 1.57079632679 0</pose>
         <geometry>
           <sphere>
-            <radius>0.033</radius>
+            <radius>{{ 0.033*scale }}</radius>
           </sphere>
         </geometry>
         <max_contacts>1</max_contacts>
@@ -365,13 +369,13 @@
           </contact>
         </surface>
       </collision>
-    {%- if hq_wheel != "1" %}
+    {%- if hq_wheel != 1 %}
       <visual name="{{ model_name }}_rear_right_wheel_collision_visual">
         <pose>0 0 0 0 1.57079632679 0</pose>
         <geometry>
           <cylinder>
-            <radius>0.033</radius>
-            <length>0.024</length>
+            <radius>{{ 0.033*scale }}</radius>
+            <length>{{ 0.024*scale }}</length>
           </cylinder>
         </geometry>
         <material>
@@ -382,9 +386,9 @@
         </material>
       </visual>
     {%- endif %}
-    {%- if hq_wheel == "1" %}
+    {%- if hq_wheel == 1 %}
       <visual name="{{ model_name }}_rear_right_wheel_visual">
-        <pose>0 -.006 0 0 0 0</pose>
+        <pose>0 {{ -0.006*scale }} 0 0 0 1.57079632679</pose>
         <geometry>
           <mesh>
             <uri>model://nxp_cupcar/meshes/RightWheel.stl</uri>
@@ -403,7 +407,7 @@
     </link>
   {%- if pixy2_cmucam5 == 1 %}
     <link name="{{ camera_image }}_link">
-      <pose>-.10 0 .35 0 1.15 0</pose>
+      <pose>{{ -0.10*scale }} 0 {{ 0.35*scale }} 0 1.15 0</pose>
       <visual name="{{ camera_image }}_visual">
         <pose>0 0 0 1.57079632679 0 1.57079632679</pose>
         <geometry>
@@ -461,32 +465,32 @@
   {%- endif %}
   {%- if controller == "PX4" %}
     <link name="{{ model_name }}_front_right_wheel_steering_link">
-      <pose>-.04 -0.06 -.0055 0 0 0</pose>
+      <pose>{{ -0.04*scale }} {{ -0.06*scale }} {{ -0.0055*scale }} 0 0 0</pose>
       <inertial>
-        <mass>0.1</mass>
+        <mass>{{ 0.1*(scale**2) }}</mass>
         <inertia>
-          <ixx>0.001</ixx>
+          <ixx>{{ 0.001*(scale**4) }}</ixx>
           <ixy>0.0</ixy>
-          <iyy>0.001</iyy>
+          <iyy>{{ 0.001*(scale**4) }}</iyy>
           <ixz>0.0</ixz>
           <iyz>0.0</iyz>
-          <izz>0.001</izz>
+          <izz>{{ 0.001*(scale**4) }}</izz>
         </inertia>
       </inertial>
       <gravity>1</gravity>
       <velocity_decay/>
     </link>
     <link name="{{ model_name }}_front_left_wheel_steering_link">
-      <pose>-.04 0.06 -.0055 0 0 0</pose>
+      <pose>{{ -0.04*scale }} {{ 0.06*scale }} {{ -0.0055*scale }} 0 0 0</pose>
       <inertial>
-        <mass>0.1</mass>
+        <mass>{{ 0.1*(scale**2) }}</mass>
         <inertia>
-          <ixx>0.001</ixx>
+          <ixx>{{ 0.001*(scale**4) }}</ixx>
           <ixy>0.0</ixy>
-          <iyy>0.001</iyy>
+          <iyy>{{ 0.001*(scale**4) }}</iyy>
           <ixz>0.0</ixz>
           <iyz>0.0</iyz>
-          <izz>0.001</izz>
+          <izz>{{ 0.001*(scale**4) }}</izz>
         </inertia>
       </inertial>
       <gravity>1</gravity>
@@ -593,7 +597,7 @@
       </axis>
     </joint>
     <link name="{{ model_name }}/imu_link">
-      <pose>-.15 0 .05 0 0 0</pose>
+      <pose>{{ -0.15*scale }} 0 {{ 0.05*scale }} 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
         <mass>0.015</mass>
@@ -629,7 +633,7 @@
     </joint>
     <model name="gps0">
       <link name="link">
-        <pose>-.15 0 .05 0 0 0</pose>
+        <pose>{{ -0.15*scale }} 0 {{ 0.05*scale }} 0 0 0</pose>
         <inertial>
           <pose>0 0 0 0 0 0</pose>
           <mass>0.01</mass>
@@ -805,16 +809,16 @@
   {%- endif %}
   {%- if controller == "ROS2" %}
     <link name="{{ model_name }}_steering_wheel_link">
-      <pose>-0.05 0 0.06 -1.302101 0 1.57</pose>
+      <pose>{{ -0.05*scale }} 0 {{ 0.06*scale }} -1.302101 0 1.57</pose>
       <inertial>
-        <mass>0.1</mass>
+        <mass>{{ 0.1*(scale**2) }}</mass>
         <inertia>
-          <ixx>0.014583300</ixx>
+          <ixx>{{ 0.014583300*(scale**4) }}</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>0.014583300</iyy>
+          <iyy>{{ 0.014583300*(scale**4) }}</iyy>
           <iyz>0</iyz>
-          <izz>0.012500000</izz>
+          <izz>{{ 0.012500000*(scale**4) }}</izz>
         </inertia>
       </inertial>
     </link>
@@ -879,7 +883,7 @@
       </axis>
     </joint>
     <joint name="{{ model_name }}_steering_wheel_joint" type="revolute">
-      <pose>-0.002 0 0 0 0 0</pose>
+      <pose>{{ -0.002*scale }} 0 0 0 0 0</pose>
       <parent>{{ model_name }}_frame_link</parent>
       <child>{{ model_name }}_steering_wheel_link</child>
       <axis>
@@ -914,16 +918,16 @@
       <max_steer>0.6458</max_steer>
       <max_steering_angle>7.85</max_steering_angle>
       <max_speed>5</max_speed>
-      <left_steering_pid_gain>15 0 1</left_steering_pid_gain>
+      <left_steering_pid_gain>{{ 15*(scale**2) }} 0 {{ 1*(scale**2) }}</left_steering_pid_gain>
       <left_steering_i_range>0 0</left_steering_i_range>
-      <right_steering_pid_gain>15 0 1</right_steering_pid_gain>
+      <right_steering_pid_gain>{{ 15*(scale**2) }} 0 {{ 1*(scale**2) }}</right_steering_pid_gain>
       <right_steering_i_range>0 0</right_steering_i_range>
-      <linear_velocity_pid_gain>1 0 .1</linear_velocity_pid_gain>
+      <linear_velocity_pid_gain>{{ 1*(scale**2) }} 0 {{ 0.1*(scale**2) }}</linear_velocity_pid_gain>
       <linear_velocity_i_range>0 0</linear_velocity_i_range>
-      <publish_odom>true</publish_odom>
-      <publish_odom_tf>true</publish_odom_tf>
-      <publish_wheel_tf>true</publish_wheel_tf>
-      <publish_distance>true</publish_distance>
+      <publish_odom>false</publish_odom>
+      <publish_odom_tf>false</publish_odom_tf>
+      <publish_wheel_tf>false</publish_wheel_tf>
+      <publish_distance>false</publish_distance>
       <odometry_frame>odom</odometry_frame>
       <robot_base_frame>{{ model_name }}_frame_link</robot_base_frame>
     </plugin>
