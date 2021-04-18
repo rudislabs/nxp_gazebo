@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<sdf version='1.6'>
+  <model name='nxp_drone'>
+    <link name='base_link'>
+      <pose>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>1.5</mass>
+        <inertia>
+          <ixx>0.029125</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.029125</iyy>
+          <iyz>0</iyz>
+          <izz>0.055225</izz>
+        </inertia>
+      </inertial>
+      <collision name="base_link_inertial_collision">
+        <geometry>
+          <mesh>
+            <uri>model://nxp_drone/meshes/NXP-HGD-LITE.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="base_link_inertial_visual">
+        <geometry>
+          <mesh>
+            <uri>model://nxp_drone/meshes/NXP-HGD-LITE.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <gravity>1</gravity>
+      <velocity_decay/>
+    </link>
+  </model>
+</sdf>
