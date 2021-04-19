@@ -8,6 +8,11 @@ import jinja2
 import argparse
 import os
 import numpy as np
+import json
+import shlex
+import sys
+import subprocess
+import ast
 
 rel_gazebo_path = ".."
 rel_model_path ="../models"
@@ -15,7 +20,8 @@ script_path = os.path.realpath(__file__).replace("jinja_model_gen.py","")
 default_env_path = os.path.relpath(os.path.join(script_path, rel_gazebo_path))
 default_model_path = os.path.relpath(os.path.join(script_path, rel_model_path))
 default_sdf_dict = {
-    "nxp_cupcar": 1.5
+    "nxp_cupcar": 1.5,
+    "nxp_drone": 1.6
 }
 
 if __name__ == "__main__":
@@ -35,6 +41,7 @@ if __name__ == "__main__":
     parser.add_argument('--hq_wheel', default=0, help="Enable low poly count on wheel")
     parser.add_argument('--pixy2_cmucam5', default=1, help="Enable pixycam")
     parser.add_argument('--camera_image', default="NotSet", help="Name of camera image topic.")
+    parser.add_argument('--sensors', default="NotSet", help="Sensors dictionary.")
     parser.add_argument('--namespace', default="NotSet", help="Namespace of robot.")
     parser.add_argument('--hil_mode', default=0, help="Enable HIL mode for HITL simulation")
     parser.add_argument('--model_name', default="NotSet", help="Model to be used in jinja files")
@@ -42,6 +49,14 @@ if __name__ == "__main__":
 
     if args.namespace == "":
         args.namespace = "NotSet"
+
+    if args.sensors != "NotSet":
+        try:
+            args.sensors = ast.literal_eval(args.sensors)
+        except:
+            print("Failed to read passed sensors dictionary")
+            args.sensors = "NotSet"
+            pass
 
     if args.base_model not in default_sdf_dict:
         print("\nWARNING!!!")
@@ -56,6 +71,26 @@ if __name__ == "__main__":
     
     if args.sdf_version == "NotSet":
         args.sdf_version = default_sdf_dict.get(args.base_model)
+
+    if args.sensors != "NotSet":
+        sensors = args.sensors
+        for sensor in sensors:
+            if sensors[sensor]["method"] == "include":
+    
+                generate_sensor_args = ' --sdf_version "{:s}" --namespace "{:s}" --params "{:s}"'.format(
+                    str(args.sdf_version), str(args.namespace), str(sensors[sensor]["params"]))
+                
+                generate_sensor_cmd = 'python3 {:s}/jinja_sensor_gen.py{:s}'.format(
+                    script_path, generate_sensor_args).replace("\n","").replace("    ","")
+                sensor_cmd_popen=shlex.split(generate_sensor_cmd)
+                sensor_popen = subprocess.Popen(sensor_cmd_popen, stdout=subprocess.PIPE, text=True)
+                while True:
+                    output = sensor_popen.stdout.readline()
+                    if output == '' and sensor_popen.poll() is not None:
+                        break
+                    if output:
+                        print(output.strip())
+                    sensor_popen.wait()
         
     input_filename = os.path.relpath(os.path.join(default_model_path, '{:s}/{:s}.sdf.jinja'.format(args.base_model,args.base_model)))
     env = jinja2.Environment(loader=jinja2.FileSystemLoader(default_env_path))
@@ -67,7 +102,8 @@ if __name__ == "__main__":
     if args.enable_lockstep=="NotSet":
         args.enable_lockstep=1
 
-    d = {'sdf_version': args.sdf_version, \
+    d = {'np': np, \
+         'sdf_version': args.sdf_version, \
          'controller': args.controller, \
          'mavlink_tcp_port': args.mavlink_tcp_port, \
          'mavlink_udp_port': args.mavlink_udp_port, \
@@ -78,6 +114,7 @@ if __name__ == "__main__":
          'serial_baudrate': args.serial_baudrate, \
          'enable_lockstep': args.enable_lockstep, \
          'model_name': args.model_name, \
+         'sensors': args.sensors, \
          'hq_frame': args.hq_frame, \
          'hq_wheel': args.hq_wheel, \
          'pixy2_cmucam5': args.pixy2_cmucam5, \

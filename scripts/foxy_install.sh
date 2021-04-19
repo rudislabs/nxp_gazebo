@@ -41,12 +41,12 @@ sudo apt-get -y autoremove
 source /opt/ros/foxy/setup.bash
 
 # Install Python 3 pip build dependencies first.
+sudo apt apt install python3-argcomplete python3-empy python3-jinja2 python3-cerberus python3-coverage python3-matplotlib python3-numpy python3-packaging python3-pkgconfig python3-opencv python3-colcon-common-extensions python3-wheel python3-setuptools python3-request python3-serial python3-six python3-toml python3-psutil
+
 python3 -m pip install --upgrade pip wheel setuptools
 
 # Python 3 dependencies installed by pip
-python3 -m pip install argparse argcomplete coverage cerberus empy jinja2 \
-		matplotlib==3.0.* numpy nunavut packaging pkgconfig pyros-genmsg pyulog \
-		pyyaml requests serial six toml psutil pyulog opencv-python colcon-common-extensions wheel
+python3 -m pip install nunavut pyros-genmsg pyulog pyyaml
 
 echo 'source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash' >> ~/.bashrc
 

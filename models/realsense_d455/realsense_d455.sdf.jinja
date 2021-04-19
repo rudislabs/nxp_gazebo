@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+{%- set model_name = "realsense_d455" if params.model_name is not defined else params.model_name -%}
+{%- set depth_width = 640 if params.depth_width is not defined else params.depth_width -%}
+{%- set depth_height = 480 if params.depth_height is not defined else params.depth_height -%}
+{%- set depth_near = 0.5 if params.depth_near is not defined else params.depth_near -%}
+{%- set depth_far = 20 if params.depth_far is not defined else params.depth_far -%}
+{%- set depth_update_rate = 5 if params.depth_update_rate is not defined else params.depth_update_rate -%}
+{%- set width = 1280 if params.width is not defined else params.width -%}
+{%- set height = 800 if params.height is not defined else params.height -%}
+{%- set near = 0.1 if params.near is not defined else params.near -%}
+{%- set far = 300 if params.far is not defined else params.far -%}
+{%- set update_rate = 30 if params.update_rate is not defined else params.update_rate -%}
+{%- set namespace = "" if namespace == "NotSet" else namespace -%}
+{%- set sdf_version = "1.7" if sdf_version == "NotSet" else sdf_version %}
+<sdf version="{{ sdf_version }}">
+  <model name="{{ model_name }}">
+    <static>false</static>
+    <link name="{{ model_name }}_link">
+      <inertial>
+        <mass>0.005</mass>
+        <inertia>
+          <ixx>4.15e-6</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>2.407e-6</iyy>
+          <iyz>0</iyz>
+          <izz>2.407e-6</izz>
+        </inertia>
+      </inertial>
+      <visual name="{{ model_name }}_visual">
+        <pose>0 0 0 1.57 0 1.57</pose>
+        <material>
+          <script>
+            <name>Gazebo/Grey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+        <geometry>
+          <mesh>
+            <scale>.001 .001 .001</scale>
+            <uri>model://realsense_d455/meshes/d455-reduce.stl</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <sensor name="{{ model_name }}_depth_camera" type="depth">
+        <always_on>1</always_on>
+        <update_rate>{{ depth_update_rate }}</update_rate>
+        <camera name="head_depth_{{ model_name }}">
+          <horizontal_fov>1.5</horizontal_fov>
+          <image>
+            <width>{{ depth_width }}</width>
+            <height>{{ depth_height }}</height>
+          </image>
+          <clip>
+            <near>{{ depth_near }}</near>
+            <far>{{ depth_far }}</far>
+          </clip>
+          <depth_camera>
+            <output>depths</output>
+          </depth_camera>
+        </camera>
+        <plugin name='{{ model_name }}_depth_controller' filename='libgazebo_ros_camera.so'>
+          <robotNamespace>{{ namespace }}</robotNamespace>
+          <cameraName>{{ model_name }}_depth</cameraName>
+          <frameName>{{ model_name }}_depth_frame</frameName>
+          <!--<imageTopicName>depth</imageTopicName>-->
+          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+          <hackBaseline>0.07</hackBaseline>
+          <distortionK1>0.0</distortionK1>
+          <distortionK2>0.0</distortionK2>
+          <distortionK3>0.0</distortionK3>
+          <distortionT1>0.0</distortionT1>
+          <distortionT2>0.0</distortionT2>
+        </plugin>
+      </sensor>
+      <sensor name="{{ model_name }}_camera" type="camera">
+        <always_on>1</always_on>
+        <update_rate>{{ update_rate }}</update_rate>
+        <camera name="head_{{ model_name }}">
+          <horizontal_fov>1.57</horizontal_fov>
+          <image>
+            <width>{{ width }}</width>
+            <height>{{ height }}</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>{{ near }}</near>
+            <far>{{ far }}</far>
+          </clip>
+          <lens>
+            <type>gnomonical</type>
+            <scale_to_hfov>1</scale_to_hfov>
+          </lens>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+        <plugin name='{{ model_name }}_controller' filename='libgazebo_ros_camera.so'>
+          <robotNamespace>{{ namespace }}</robotNamespace>
+          <cameraName>{{ model_name }}_rgb</cameraName>
+          <imageTopicName>image_raw</imageTopicName>
+          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+          <frameName>{{ model_name }}_frame</frameName>
+          <hackBaseline>0.07</hackBaseline>
+          <distortionK1>0.0</distortionK1>
+          <distortionK2>0.0</distortionK2>
+          <distortionK3>0.0</distortionK3>
+          <distortionT1>0.0</distortionT1>
+          <distortionT2>0.0</distortionT2>
+        </plugin>
+      </sensor>
+    </link>
+  </model>
+</sdf>

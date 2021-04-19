@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+{%- set gps_model_name = gps if gps_model_name == 'NotSet' else gps_model_name -%}
+<model>
+  <name>{{ gps_model_name }}</name>
+  <version>1.0</version>
+  <sdf version='1.6'>{{ gps_model_name }}.sdf</sdf>
+
+  <author>
+   <name>Benjamin Perseghetti</name>
+   <email>bperseghetti@rudislabs.com</email>
+  </author>
+
+  <description>
+    Uncommon GPS model.
+  </description>
+</model>

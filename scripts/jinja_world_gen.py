@@ -55,6 +55,7 @@ if __name__ == "__main__":
     parser.add_argument('--set_physics', default=1, help="Enable or disable physics in world file, on [1] or off [0]")
     parser.add_argument('--output_file', help="world output file")
     parser.add_argument('--ode_threads', default=2, help="Number of island threads to use for ODE.")
+    parser.add_argument('--ode_iterations', default=10, help="Number of iterations for ODE.")
     args = parser.parse_args()
 
     print('Generation script passed world name: "{:s}"'.format(args.world_name))
@@ -172,6 +173,7 @@ if __name__ == "__main__":
          'embedded_models': args.embedded_models, \
          'fog_params': args.fog_params, \
          'set_physics': args.set_physics, \
+         'ode_iterations': args.ode_iterations, \
          'ode_threads': args.ode_threads}
 
         

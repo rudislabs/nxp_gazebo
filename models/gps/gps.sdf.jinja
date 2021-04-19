@@ -1,0 +1,59 @@
+<?xml version="1.0" ?>
+<!-- Generated from gps.sdf.jinja -->
+{%- set sdf_version = '1.6' if sdf_version == 'NotSet' else sdf_version -%}
+{%- set gps_model_name = gps if gps_model_name == 'NotSet' else gps_model_name %}
+<sdf version='{{ sdf_version }}'>
+  <model name='{{ gps_model_name }}'>
+    <link name="link">
+      <pose>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.015</mass>
+        <inertia>
+          <ixx>1e-05</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1e-05</iyy>
+          <iyz>0</iyz>
+          <izz>1e-05</izz>
+        </inertia>
+      </inertial>
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>0.01</radius>
+            <length>0.002</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Black</name>
+            <uri>__default__</uri>
+          </script>
+        </material>
+      </visual>
+      <sensor name="{{ gps_model_name }}" type="gps">
+        <pose>0 0 0 0 0 0</pose>
+        <update_rate>5.0</update_rate>
+        <always_on>true</always_on>
+        <visualize>false</visualize>
+        <plugin name="gps_plugin" filename="libgazebo_gps_plugin.so">
+          <robotNamespace></robotNamespace>
+          <gpsNoise>true</gpsNoise>
+          <gpsXYRandomWalk>2.0</gpsXYRandomWalk>
+          <gpsZRandomWalk>4.0</gpsZRandomWalk>
+          <gpsXYNoiseDensity>2.0e-4</gpsXYNoiseDensity>
+          <gpsZNoiseDensity>4.0e-4</gpsZNoiseDensity>
+          <gpsVXYNoiseDensity>0.2</gpsVXYNoiseDensity>
+          <gpsVZNoiseDensity>0.4</gpsVZNoiseDensity>
+        {%- if gps_attack_time != 'NotSet' or  gps_attack_rate != 'NotSet' -%}  
+          {%- set gps_attack_time = 30 if gps_attack_time == 'NotSet' else gps_attack_time -%}
+          {% set gps_attack_rate = 0.1 if gps_attack_rate == 'NotSet' else gps_attack_rate %}
+          <gpsAttackTime>{{ gps_attack_time }}</gpsAttackTime>
+          <gpsAttackRate>{{ gps_attack_rate }}</gpsAttackRate>
+        {%- endif -%}
+        </plugin>
+      </sensor>
+    </link>
+  </model>
+</sdf>
