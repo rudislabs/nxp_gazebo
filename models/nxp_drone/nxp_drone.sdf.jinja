@@ -3,6 +3,29 @@
 {%- set namespace = "" if namespace == "NotSet" else namespace -%}
 {%- set sdf_version = '1.6' if sdf_version == 'NotSet' else sdf_version -%}
 {%- set collision_visual = '0' -%}
+{%- set prop_length = 11.0 if prop_length == 'NotSet' else prop_length -%}
+{%- set motor_model = '5010' if motor_model == 'NotSet' else motor_model -%}
+
+{%- if motor_model == '5010' -%}
+  {%- set motor_color = 'Grey'-%}
+  {%- set prop_color = 'DarkGrey' -%}
+  {%- set prop_height = -0.02 -%}
+  {%- set motor_uri = "model://nxp_drone/meshes/5010Top.stl"-%}
+  {%- set motor_top_pose = "-.025 -.025 -0.042 0 0 0" -%}
+  {%- set motor_c_pose = "0 0 -0.024 0 0 0" -%}
+  {%- set motor_c_r = 0.025 -%}
+  {%- set motor_c_l = 0.010 -%}
+{%- endif %}
+{%- if motor_model == '2212' -%}
+  {%- set motor_color = 'Red'-%}
+  {%- set prop_color = 'White' -%}
+  {%- set prop_height = -0.01 -%}
+  {%- set motor_uri = "model://nxp_drone/meshes/2212Top.stl"-%}
+  {%- set motor_top_pose = "-0.014 -0.014 -0.035 0 0 0" -%}
+  {%- set motor_c_pose = "0 0 -0.024 0 0 0" -%}
+  {%- set motor_c_r = 0.014 -%}
+  {%- set motor_c_l = 0.022 -%}
+{%- endif -%}
 
 {# general geometry #}
 {%- set motor_sep = 0.5 -%}
@@ -17,10 +40,10 @@
 {%- set fuse_izz = fuse_m*fuse_r**2/2 -%}
 
 {# rotors #}
-{%- set rtr_m = 0.019 -%}           {# mass, kg #}
-{%- set rtr_r = 0.165 -%}           {# radius, m #}
-{%- set rtr_w = 0.02 -%}            {# width, m #}
-{%- set rtr_h = 0.001 -%}           {# thickness, m #}
+{%- set rtr_m = 0.019*(prop_length/13.0) -%}           {# mass, kg #}
+{%- set rtr_r = 0.165*(prop_length/13.0) -%}           {# radius, m #}
+{%- set rtr_w = 0.02*(prop_length/13.0) -%}            {# width, m #}
+{%- set rtr_h = 0.001*(prop_length/13.0) -%}           {# thickness, m #}
 {%- set rtr_ixx = rtr_m/12*(rtr_h**2 + rtr_w**2) -%}
 {%- set rtr_iyy = rtr_m/12*(rtr_r**2 + rtr_h**2) -%}
 {%- set rtr_izz = rtr_m/12*(rtr_w**2 + rtr_r**2) -%}
@@ -58,12 +81,32 @@
 </inertial>
 {%- endmacro -%}
 
-{%- macro mesh_colored(uri, color, scale) -%}
+{%- macro mesh_colored(uri, color, uri_type) -%}
 <geometry>
   <mesh>
-    <scale>{{ scale }} {{ scale }} {{ scale }}</scale>
+  {%- if uri_type == "prop" %}
+    <scale>{{ prop_length/13.0 }} {{ prop_length/13.0 }} {{ prop_length/13.0 }}</scale>
+  {%- endif %}
+  {%- if uri_type == "motor" %}
+    <scale>1 1 1</scale>
+  {%- endif %}
     <uri>{{ uri }}</uri>
   </mesh>
+</geometry>
+<material>
+  <script>
+    <name>Gazebo/{{ color }}</name>
+    <uri>file://media/materials/scripts/gazebo.material</uri>
+  </script>
+</material>
+{%- endmacro -%}
+
+{%- macro cylinder(c_r, c_l, color) -%}
+<geometry>
+  <cylinder>
+    <radius>{{ c_r }}</radius>
+    <length>{{ c_l }}</length>
+  </cylinder>
 </geometry>
 <material>
   <script>
@@ -309,7 +352,7 @@
         {% set rtr_dir = "cw" %}
       {% endif %}
 
-      {% set prop_uri = "model://nxp_drone/meshes/nxp_prop_{:s}.dae".format(rtr_dir) %}
+      {% set prop_uri = "model://nxp_drone/meshes/1345_prop_{:s}.stl".format(rtr_dir) %}
 
     <!--Rotor {{n}} -->
     <link name="rotor_{{n}}">
@@ -317,10 +360,18 @@
       <self_collide>false</self_collide>
       <velocity_decay/>
       <pose>{{ rtr_pos|join(' ') }} 0 0 0</pose>
-      {{ inertial(rtr_m, rtr_ixx, rtr_iyy, rtr_izz)| indent(8) }}
+      {{ inertial(rtr_m, rtr_ixx, rtr_iyy, rtr_izz) | indent(8) }}
       <visual name="rotor_{{n}}_visual">
-        <pose>0 0 0 0 0 0</pose>
-        {{ mesh_colored(prop_uri, "DarkGrey", 0.8)|indent(8) }}
+        <pose>{{ -0.026*(prop_length/13.0) }} {{ -0.173*(prop_length/13.0) }} {{ prop_height }} 0 0 0</pose>
+        {{ mesh_colored(prop_uri, prop_color, "prop") | indent(8) }}
+      </visual>
+      <visual name="rotor_{{n}}_visual_motor_top">
+        <pose>{{ motor_top_pose }}</pose>
+        {{ mesh_colored(motor_uri, motor_color, "motor") | indent(8) }}
+      </visual>
+      <visual name="rotor_{{n}}_visual_motor_bottom">
+        <pose>{{ motor_c_pose }}</pose>
+        {{ cylinder(motor_c_r, motor_c_l, "Black") | indent(8) }}
       </visual>
       <collision name="rotor_{{n}}_collision">
         <pose>0 0 0 0 0 0 </pose>

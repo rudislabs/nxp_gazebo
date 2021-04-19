@@ -42,6 +42,8 @@ if __name__ == "__main__":
     parser.add_argument('--pixy2_cmucam5', default=1, help="Enable pixycam")
     parser.add_argument('--camera_image', default="NotSet", help="Name of camera image topic.")
     parser.add_argument('--sensors', default="NotSet", help="Sensors dictionary.")
+    parser.add_argument('--prop_length', default="NotSet", help="Prop length in Inches.")
+    parser.add_argument('--motor_model', default="NotSet", help="Motor model either 5010 or 2212.")
     parser.add_argument('--namespace', default="NotSet", help="Namespace of robot.")
     parser.add_argument('--hil_mode', default=0, help="Enable HIL mode for HITL simulation")
     parser.add_argument('--model_name', default="NotSet", help="Model to be used in jinja files")
@@ -68,6 +70,9 @@ if __name__ == "__main__":
 
     if args.model_name == "NotSet":
         args.model_name = args.base_model
+
+    if args.prop_length != "NotSet":
+        args.prop_length = float(args.prop_length)
     
     if args.sdf_version == "NotSet":
         args.sdf_version = default_sdf_dict.get(args.base_model)
@@ -119,6 +124,8 @@ if __name__ == "__main__":
          'hq_wheel': args.hq_wheel, \
          'pixy2_cmucam5': args.pixy2_cmucam5, \
          'camera_image': args.camera_image, \
+         'prop_length': args.prop_length, \
+         'motor_model': args.motor_model, \
          'namespace': args.namespace, \
          'hil_mode': args.hil_mode}
 
