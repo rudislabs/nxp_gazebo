@@ -450,13 +450,13 @@
       <!--Image sensor: Aptina MT9M114-->
       <sensor type="camera" name="{{ camera_image }}">
         <always_on>true</always_on>
-        <update_rate>30.0</update_rate>
+        <update_rate>60.0</update_rate>
         <camera name="head">
           <!--horizontal_fov should be 1.0472 but need it wider with lens-->
           <horizontal_fov>1.5</horizontal_fov>
           <image>
-            <width>1296</width>
-            <height>936</height> <!--should be 976 but need to be 936 for 18x scale-->
+            <width>162</width>
+            <height>117</height> <!--should be 976 but need to be 936 for 18x scale-->
             <format>R8G8B8</format>
           </image>
           <clip>
