@@ -1,0 +1,153 @@
+<?xml version='1.0' ?>
+<sdf version='1.7'>
+  <model name="ydlidar_x4">
+    <static>false</static>
+    <link name="ydlidar_x4_base">
+      <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <mass>0.180</mass>
+          <inertia>
+            <ixx>0.000130494</ixx>
+            <iyy>0.000130494</iyy>
+            <izz>0.000038785</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+      </inertial>
+      <visual name="ydlidar_x4_base_visual">
+        <pose>0 0 .05 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://ydlidar_x4/meshes/X4-BASE.stl</uri>
+            <scale>.1 0.1 0.1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0 0 0 1</ambient>
+          <diffuse>0 0 0 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+          <emissive>0 0 0 0</emissive>
+        </material>
+      </visual>
+      <collision name="ydlidar_x4_base_collision">
+        <pose>.015 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>.1 .07 .038</size>
+          </box>
+        </geometry>
+      </collision>
+      <!-- <visual name="ydlidar_x4_base_collision_visual">
+        <pose>.015 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>.1 .07 .038</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/YellowTransparent</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual> -->
+    </link>
+    <link name="ydlidar_x4_top">
+      <pose>0 0 0 0 0 0</pose>
+      <inertial>
+        <mass>0.06</mass>
+        <inertia>
+          <ixx>0.000183636</ixx>
+          <iyy>0.000183636</iyy>
+          <izz>0.000053792</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <visual name="ydlidar_x4_top_visual">
+        <pose>-0.0005 0.0005 0.05 0 0 1.57</pose>
+        <geometry>
+          <mesh>
+            <uri>model://ydlidar_x4/meshes/X4-TOP.stl</uri>
+            <scale>0.1 0.1 0.1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0 0 0.75 1</ambient>
+          <diffuse>0 0 0.75 1</diffuse>
+          <specular>0.1 0.1 0.1 1</specular>
+          <emissive>0 0 0 0</emissive>
+        </material>
+      </visual>
+      <collision name="ydlidar_x4_top_collision">
+        <pose>0 0 .038 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.0328</radius>
+            <length>0.0211</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <!--<visual name="ydlidar_x4_top_collision_visual">
+        <pose>0 0 .0276 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.0328</radius>
+            <length>0.0211</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/GreenTransparent</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>-->
+      <sensor type="ray" name="ydlidar_x4">
+        <pose>0 0 .0276 1.5707 0 0</pose>
+        <visualize>true</visualize>
+        <update_rate>500</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>2</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.001</min_angle>
+              <max_angle>0.2</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.12</min>
+            <max>10</max>
+            <resolution>0.02</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.02</stddev>
+          </noise>
+        </ray>
+        <plugin name="scan" filename="libgazebo_ros_ray_sensor.so">
+          <ros>
+            <namespace>/x4</namespace>
+          </ros>
+          <output_type>sensor_msgs/LaserScan</output_type>
+        </plugin>
+      </sensor>
+    </link>
+    <joint type="revolute" name="joint">
+      <pose>0 0 0 0 0 0</pose>
+      <parent>ydlidar_x4_base</parent>
+      <child>ydlidar_x4_top</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-10000000000000000</lower>
+          <upper>10000000000000000</upper>
+        </limit>
+      </axis>
+    </joint>
+  </model>
+</sdf>

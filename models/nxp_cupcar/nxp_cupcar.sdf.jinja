@@ -1,9 +1,7 @@
 <?xml version="1.0"?>
 {%- set model_name = "nxp_cupcar" if model_name == "NotSet" else model_name -%}
 {%- set sdf_version = "1.5" if sdf_version == "NotSet" else sdf_version -%}
-{%- set camera_image = "Pixy2CMUcam5" if camera_image == "NotSet" else camera_image -%}
 {%- set namespace = "" if namespace == "NotSet" else namespace -%}
-{%- set pixy2_cmucam5 = 1 if pixy2_cmucam5 == "NotSet" else pixy2_cmucam5 -%}
 {%- set logo = "1" -%}
 {%- set controller = "PX4" if controller == "NotSet" else controller %}
 <sdf version="{{ sdf_version }}">
@@ -435,33 +433,35 @@
       <gravity>1</gravity>
       <velocity_decay/>
     </link>
-  {%- if pixy2_cmucam5 == 1 %}
-    <link name="{{ camera_image }}_link">
-      <pose>-.09 0 .35 0 1.0 0</pose>
-      <visual name="{{ camera_image }}_visual">
-        <pose>0 0 0 1.57079632679 0 1.57079632679</pose>
-        <geometry>
-          <mesh>
-            <uri>model://pixy2_cmucam5/meshes/Pixy2CMUcam5.obj</uri>
-            <scale>.001 .001 .001</scale>
-          </mesh>
-        </geometry>
-      </visual>
-      <!--Image sensor: Aptina MT9M114-->
-      <sensor type="camera" name="{{ camera_image }}">
+  {%- if sensors != 'NotSet' %}{% for sensor in sensors %}
+    {%- if sensors[sensor].method == "jinja2" %}
+    <link name='{{ sensors[sensor].params.model_name }}_link'>
+      <pose>{{ sensors[sensor].pose }}</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.0015</mass>
+        <inertia>
+          <ixx>1e-06</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1e-06</iyy>
+          <iyz>0</iyz>
+          <izz>1e-06</izz>
+        </inertia>
+      </inertial>
+      <sensor type="{{ sensors[sensor].params.type }}" name="{{ sensors[sensor].params.model_name }}">
         <always_on>true</always_on>
-        <update_rate>30.0</update_rate>
-        <camera name="head">
-          <!--horizontal_fov should be 1.0472 but need it wider with lens-->
-          <horizontal_fov>1.5</horizontal_fov>
+        <update_rate>{{ sensors[sensor].params.update_rate }}</update_rate>
+        <camera name="head_{{ sensors[sensor].params.model_name }}">
+          <horizontal_fov>{{ sensors[sensor].params.hfov }}</horizontal_fov>
           <image>
-            <width>1296</width>
-            <height>936</height> <!--should be 976 but need to be 936 for 18x scale-->
-            <format>R8G8B8</format>
+            <width>{{ sensors[sensor].params.width }}</width>
+            <height>{{ sensors[sensor].params.height }}</height>
+            <format>{{ sensors[sensor].params.format }}</format>
           </image>
           <clip>
-            <near>0.02</near>
-            <far>100</far>
+            <near>{{ sensors[sensor].params.near }}</near>
+            <far>{{ sensors[sensor].params.far }}</far>
           </clip>
           <lens>
             <type>gnomonical</type>
@@ -473,26 +473,37 @@
             <stddev>0.007</stddev>
           </noise>
         </camera>
-        <plugin name='{{ camera_image }}_camera_controller' filename='libgazebo_ros_camera.so'>
+        <plugin name='{{ sensors[sensor].params.model_name }}_controller' filename='libgazebo_ros_camera.so'>
           <robotNamespace>{{ namespace }}</robotNamespace>
-          <cameraName>{{ camera_image }}</cameraName>
+          <cameraName>{{ sensors[sensor].params.model_name }}</cameraName>
           <imageTopicName>image_raw</imageTopicName>
           <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-          <frameName>camera_link</frameName>
+          <frameName>{{ sensors[sensor].params.model_name }}_frame</frameName>
           <hackBaseline>0.07</hackBaseline>
-          <distortionK1>0.0</distortionK1>
-          <distortionK2>0.0</distortionK2>
-          <distortionK3>0.0</distortionK3>
-          <distortionT1>0.0</distortionT1>
-          <distortionT2>0.0</distortionT2>
         </plugin>
       </sensor>
     </link>
-    <joint name="pixy2_cmucam5_joint" type="fixed">
-      <child>{{ camera_image }}_link</child>
+    {%- endif %}
+    {%- if sensors[sensor].method == "include" %}
+    <include>
+      <uri>model://{{ sensors[sensor].params.model_name }}</uri>
+      <pose>{{ sensors[sensor].pose }}</pose>
+      <name>{{ sensors[sensor].params.model_name }}</name>
+    </include>
+    {%- endif %}
+    {%- if sensors[sensor].method == "jinja2" %}
+    <joint name="{{ sensors[sensor].params.model_name }}_joint" type="{{ sensors[sensor].joint.type }}">
+      <child>{{ sensors[sensor].params.model_name }}_link</child>
       <parent>{{ model_name }}_frame_link</parent>
-    </joint>
-  {%- endif %}
+    </joint> 
+    {%- endif %}
+    {%- if sensors[sensor].method == "include" %}
+    <joint name="{{ sensors[sensor].params.model_name }}_joint" type="{{ sensors[sensor].joint.type }}">
+      <child>{{ sensors[sensor].params.model_name }}::{{ sensors[sensor].params.model_name }}_link</child>
+      <parent>{{ model_name }}_frame_link</parent>
+    </joint> 
+    {%- endif %}
+  {%- endfor %}{%- endif %}
   {%- if controller == "PX4" %}
     <link name="{{ model_name }}_front_right_wheel_steering_link">
       <pose>-.04 -0.06 -.0055 0 0 0</pose>

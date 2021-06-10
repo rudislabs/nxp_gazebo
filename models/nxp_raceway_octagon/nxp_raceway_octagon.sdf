@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<sdf version="1.5">    
+<sdf version="1.7">    
   <model name='nxp_raceway_octagon'>
     <pose>0 0 0 0 0 0</pose>
     <link name='nxp_raceway_octagon_link'>
@@ -39,7 +39,7 @@
         </geometry>
         <material>
           <script>
-            <name>Gazebo/Black</name>
+            <name>Gazebo/Red</name>
             <uri>file://media/materials/scripts/gazebo.material</uri>
           </script>
         </material>
